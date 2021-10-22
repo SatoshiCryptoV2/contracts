@@ -2,13 +2,13 @@
 
 SATOSHI Token : 
 
-Address : 0x38C8d1f47816b9e5B1E0E8c702f34Ece0C8080c8
+Address : 0x4Ee80372D69260d72826f6e8F2351201618709Ae
 
-BSC contract code : https://bscscan.com//address/0x38C8d1f47816b9e5B1E0E8c702f34Ece0C8080c8
+BSC contract code : https://bscscan.com//address/0x4Ee80372D69260d72826f6e8F2351201618709Ae
 
 SATOSHI Masterchef : 
 
-Address : 0x06bC3c911694F5781B0A11ba211dffC0eBcE8a60
+Address : 0xd4b9601FaB8782f017E42490Ab9063d8c984BB77
 
-BSC contract code : https://bscscan.com//address/0x06bC3c911694F5781B0A11ba211dffC0eBcE8a60
+BSC contract code : https://bscscan.com//address/0xd4b9601FaB8782f017E42490Ab9063d8c984BB77
 

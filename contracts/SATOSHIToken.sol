@@ -265,6 +265,7 @@ contract SatoshiToken is BEP20 {
 
     EnumerableSet.AddressSet private _minters;
     EnumerableSet.AddressSet private _blockAddrs;
+    EnumerableSet.AddressSet private _nftOperators;
 
     // Events
     event OperatorTransferred(address indexed previousOperator, address indexed newOperator);
@@ -776,12 +777,12 @@ contract SatoshiToken is BEP20 {
     }
 
     function addMinter(address _addMinter) public onlyOwner returns (bool) {
-        require(_addMinter != address(0), "BSW: _addMinter is the zero address");
+        require(_addMinter != address(0), "SATOSHI: _addMinter is the zero address");
         return EnumerableSet.add(_minters, _addMinter);
     }
 
     function delMinter(address _delMinter) public onlyOwner returns (bool) {
-        require(_delMinter != address(0), "BSW: _delMinter is the zero address");
+        require(_delMinter != address(0), "SATOSHI: _delMinter is the zero address");
         return EnumerableSet.remove(_minters, _delMinter);
     }
 
@@ -794,7 +795,7 @@ contract SatoshiToken is BEP20 {
     }
 
     function getMinter(uint256 _index) public view onlyOwner returns (address){
-        require(_index <= getMinterLength() - 1, "BSW: index out of bounds");
+        require(_index <= getMinterLength() - 1, "SATOSHI: index out of bounds");
         return EnumerableSet.at(_minters, _index);
     }
 
@@ -805,12 +806,12 @@ contract SatoshiToken is BEP20 {
     }
     
     function addBlockAddr(address _addBlockAddr) public onlyOwner returns (bool) {
-        require(_addBlockAddr != address(0), "TOLL: _addBlockAddr is the zero address");
+        require(_addBlockAddr != address(0), "SATOSHI: _addBlockAddr is the zero address");
         return EnumerableSet.add(_blockAddrs, _addBlockAddr);
     }
 
     function delBlockAddr(address _delblockAddr) public onlyOwner returns (bool) {
-        require(_delblockAddr != address(0), "TOLL: _delblockAddr is the zero address");
+        require(_delblockAddr != address(0), "SATOSHI: _delblockAddr is the zero address");
         return EnumerableSet.remove(_blockAddrs, _delblockAddr);
     }
 
@@ -823,13 +824,42 @@ contract SatoshiToken is BEP20 {
     }
 
     function getBlockAddr(uint256 _index) public view onlyOwner returns (address){
-        require(_index <= getBlockAddrLength() - 1, "TOLL: index out of bounds");
+        require(_index <= getBlockAddrLength() - 1, "SATOSHI: index out of bounds");
         return EnumerableSet.at(_blockAddrs, _index);
     }
 
     // modifier for mint function
     modifier notBlockAddr() {
-        require(!isBlockAddr(msg.sender), "caller is not the minter");
+        require(!isBlockAddr(msg.sender), "caller is blocked");
+        _;
+    }
+
+    function addNftOperator(address _addNftOperator) public onlyOwner returns (bool) {
+        require(_addNftOperator != address(0), "SATOSHI: _addNftOperator is the zero address");
+        return EnumerableSet.add(_nftOperators, _addNftOperator);
+    }
+
+    function delNftOperator(address _delNftOperator) public onlyOwner returns (bool) {
+        require(_delNftOperator != address(0), "SATOSHI: _delNftOperator is the zero address");
+        return EnumerableSet.remove(_nftOperators, _delNftOperator);
+    }
+
+    function getNftOperatorLength() public view returns (uint256) {
+        return EnumerableSet.length(_nftOperators);
+    }
+
+    function isNftOperator(address account) public view returns (bool) {
+        return EnumerableSet.contains(_nftOperators, account);
+    }
+
+    function getNftOperator(uint256 _index) public view onlyOwner returns (address){
+        require(_index <= getNftOperatorLength() - 1, "SATOSHI: index out of bounds");
+        return EnumerableSet.at(_nftOperators, _index);
+    }
+
+    // modifier for mint function
+    modifier onlyNftOperator() {
+        require(isNftOperator(msg.sender), "caller is not the nft operator");
         _;
     }
 
@@ -859,19 +889,19 @@ contract SatoshiToken is BEP20 {
         nftFeeRate5 = _nftFeeRate5;
     }
 
-    function updateNftFeeAddr1(address _nftFeeAddr1) public onlyOwner {
+    function updateNftFeeAddr1(address _nftFeeAddr1) public onlyNftOperator {
         nftFeeAddr1 = _nftFeeAddr1;
     }
-    function updateNftFeeAddr2(address _nftFeeAddr2) public onlyOwner {
+    function updateNftFeeAddr2(address _nftFeeAddr2) public onlyNftOperator {
         nftFeeAddr2 = _nftFeeAddr2;
     }
-    function updateNftFeeAddr3(address _nftFeeAddr3) public onlyOwner {
+    function updateNftFeeAddr3(address _nftFeeAddr3) public onlyNftOperator {
         nftFeeAddr3 = _nftFeeAddr3;
     }
-    function updateNftFeeAddr4(address _nftFeeAddr4) public onlyOwner {
+    function updateNftFeeAddr4(address _nftFeeAddr4) public onlyNftOperator {
         nftFeeAddr4 = _nftFeeAddr4;
     }
-    function updateNftFeeAddr5(address _nftFeeAddr5) public onlyOwner {
+    function updateNftFeeAddr5(address _nftFeeAddr5) public onlyNftOperator {
         nftFeeAddr5 = _nftFeeAddr5;
     }
 }
